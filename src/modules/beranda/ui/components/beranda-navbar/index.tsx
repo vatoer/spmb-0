@@ -32,5 +32,3 @@ export const BerandaNavbar = () => {
     </nav>
   );
 };
-
-export default BerandaNavbar;
