@@ -3,13 +3,13 @@ import { SearchIcon } from "lucide-react";
 const SearchInput = () => {
   return (
     // TODO: add search input functionality
-    <form className="flex w-full max-w-[600px]">
+    <form className="flex w-full max-w-[800px]">
       <div className="relative w-full">
         <input
           type="text"
           name=""
           id=""
-          className="w-full h-10 pl-4 pr-12 py-2 border rounded-l-full focus:outline-none focus:border-blue-300"
+          className="w-full h-10 pl-4 pr-2 py-2 border rounded-l-full focus:outline-none focus:border-blue-300"
           placeholder="Search"
         />
         {/* TODO: add remove search button */}

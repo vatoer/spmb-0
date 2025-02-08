@@ -1,6 +1,7 @@
 import { Sidebar, SidebarContent } from "@/components/ui/sidebar";
 import MainSection from "./main-section";
 import { Separator } from "@/components/ui/separator";
+import PersonalSidebar from "./personal-section";
 
 export const BerandaSidebar = () => {
   return (
@@ -8,7 +9,7 @@ export const BerandaSidebar = () => {
       <SidebarContent className="bg-background">
         <MainSection />
         <Separator />
-        <MainSection />
+        <PersonalSidebar />
       </SidebarContent>
     </Sidebar>
   );

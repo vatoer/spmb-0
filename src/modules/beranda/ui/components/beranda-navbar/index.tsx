@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import SearchInput from "./search-input";
 import AuthButton from "@/modules/auth/ui/components/auth-button";
+import { NavigationMenuDemo } from "./nav-menu";
 
 export const BerandaNavbar = () => {
   return (
@@ -20,7 +21,8 @@ export const BerandaNavbar = () => {
         </div>
 
         {/* Search bar*/}
-        <div className="flex-1 flex justify-center max-w-[720px] mx-auto">
+        <div className="flex-1 flex justify-start max-w-[900px] mx-auto">
+          <NavigationMenuDemo />
           <SearchInput />
         </div>
 
