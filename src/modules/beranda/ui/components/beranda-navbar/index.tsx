@@ -11,7 +11,7 @@ export const BerandaNavbar = () => {
       <div className="flex items-center gap-4 w-full">
         <div className="flex items-center flex-shrink-0">
           {/* Menu and Logo */}
-          <SidebarTrigger />
+          <SidebarTrigger className="" />
           <Link href="/">
             <div className="p-4 flex items-center gap-1">
               <Image src="/window.svg" alt="Logo" width={32} height={32} />

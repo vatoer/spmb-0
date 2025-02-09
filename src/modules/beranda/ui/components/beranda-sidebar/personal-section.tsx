@@ -7,18 +7,18 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { HomeIcon, Send } from "lucide-react";
+import { HomeIcon, Send, UserCog } from "lucide-react";
 import Link from "next/link";
 
 const items = [
   {
     title: "Profile",
     url: "/profile",
-    icon: HomeIcon,
+    icon: UserCog,
   },
   {
-    title: "Pendaftaran",
-    url: "/pendaftaran",
+    title: "Riwayat Pendaftaran",
+    url: "/riwayat-pendaftaran",
     icon: Send,
     auth: true, // Hanya user yang sudah login yang bisa mengakses halaman ini
   },

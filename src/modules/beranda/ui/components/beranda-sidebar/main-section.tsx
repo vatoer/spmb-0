@@ -14,7 +14,13 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-import { ChevronRight, HomeIcon, Milestone, Settings } from "lucide-react";
+import {
+  BookText,
+  ChevronRight,
+  HomeIcon,
+  Milestone,
+  School,
+} from "lucide-react";
 import Link from "next/link";
 
 const items = [
@@ -26,7 +32,13 @@ const items = [
   {
     title: "Panduan",
     url: "/panduan",
-    icon: Settings,
+    icon: BookText,
+    auth: true, // Hanya user yang sudah login yang bisa mengakses halaman ini
+  },
+  {
+    title: "Daya Tampung",
+    url: "/daya-tampung",
+    icon: School,
     auth: true, // Hanya user yang sudah login yang bisa mengakses halaman ini
   },
   {
