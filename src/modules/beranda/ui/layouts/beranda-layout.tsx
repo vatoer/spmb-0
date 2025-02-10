@@ -13,7 +13,7 @@ export const BerandaLayout = async ({ children }: BerandaLayoutProps) => {
 
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
-      <div className="w-full bg-blue-500">
+      <div className="w-full bg-gradient-to-br from-red-200 via-blue-300 to-gray-400">
         <BerandaNavbar />
         <div className="flex min-h-screen pt-[4rem]">
           <BerandaSidebar />

@@ -22,6 +22,7 @@ import {
   School,
 } from "lucide-react";
 import Link from "next/link";
+import { tahapan } from "@/modules/beranda/data/tahapan";
 
 const items = [
   {
@@ -45,32 +46,7 @@ const items = [
     title: "Alur",
     icon: Milestone,
     auth: false, // Hanya user yang sudah login yang bisa mengakses halaman ini
-    subs: [
-      {
-        title: "Membuat Akun",
-        url: "/buat-akun",
-      },
-      {
-        title: "Isi Formulir",
-        url: "/formulir",
-      },
-      {
-        title: "Pilih Sekolah",
-        url: "/sekolah",
-      },
-      {
-        title: "Pembayaran",
-        url: "/pembayaran",
-      },
-      {
-        title: "Verifikasi & Seleksi",
-        url: "/pendaftaran",
-      },
-      {
-        title: "Lapor diri",
-        url: "/lapor-diri",
-      },
-    ],
+    subs: tahapan,
   },
 ];
 

@@ -58,7 +58,7 @@ export function NavigationMenuDemo() {
     <NavigationMenu className="hidden lg:flex">
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link href="/beranda" legacyBehavior passHref>
+          <Link href="/" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Beranda
             </NavigationMenuLink>
