@@ -10,7 +10,7 @@ export const InfografisTahapPendaftaran = ({
 }: InfografisTahapPendaftaranProps) => {
   return (
     <div className={cn("w-full", className && className)}>
-      <div className="flex flex-col lg:flex-row flex-grow h-auto items-stretch  justify-between py-8 gap-2 px-2">
+      <div className="flex flex-col lg:flex-row flex-grow h-auto items-stretch  justify-between pb-8 md:py-8 gap-2 px-2">
         {
           /* Tahap Pendaftaran */
           tahapan.map((tahap, index) => (
