@@ -1,7 +1,7 @@
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Tahapan } from "../../../data/tahapan";
-import { Button } from "@/components/ui/button";
 
 interface TahapProps {
   tahap: Tahapan;
@@ -26,11 +26,17 @@ export const Tahap = ({ tahap, className, isActive }: TahapProps) => {
           <h3 className="text-xl font-semibold">{title}</h3>
           <p className="text-gray-600">{description}</p>
         </div>
-        <Button className="mt-4 w-full" disabled={!isActive}>
+        {isActive ? (
           <Link href={url} className="mt-auto w-full">
-            {title}
+            <Button className="mt-4 w-full">{title}</Button>
           </Link>
-        </Button>
+        ) : (
+          <span className="mt-auto w-full">
+            <Button className="mt-4 w-full" disabled>
+              {title}
+            </Button>
+          </span>
+        )}
       </div>
     </div>
   );

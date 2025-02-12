@@ -1,9 +1,8 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
+import * as React from "react";
 
-import { cn } from "@/lib/utils";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -13,45 +12,9 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
+import { tahapan } from "@/modules/beranda/data/tahapan";
 import { Menu } from "lucide-react";
-
-const components: { title: string; href: string; description: string }[] = [
-  {
-    title: "1. Membuat Akun",
-    href: "/buat-akun",
-    description:
-      "Klik Buat Akun Sekarang, kemudian isi dengan nama dan email anda. Anda juga bisa login menggunakan akun google anda. Anda akan mendapatkan email verifikasi untuk mengaktifkan akun anda",
-  },
-  {
-    title: "2. Isi Formulir",
-    href: "/formulir",
-    description:
-      "Isi Formulir data diri Calon Murid Baru, data Orang Tua dan unggah dokumen yang diperlukan.",
-  },
-  {
-    title: "3. Pilih Sekolah",
-    href: "/sekolah",
-    description: "Pilih Sekolah tujuan anda dan ajukan pendaftaran..",
-  },
-  {
-    title: "4. Pembayaran",
-    href: "/pembayaran",
-    description:
-      "Pembayaran Biaya registrasi melalui transfer bank atau Indomaret terdekat. cetak bukti pembayaran.",
-  },
-  {
-    title: "5. Verifikasi & Seleksi",
-    href: "/pendaftaran",
-    description:
-      "Proses Verifikasi dan Seleksi untuk setiap sekolah bervariasi tergantung keperluan sekolah. Anda akan mendapatkan informasi lebih lengkap saat anda memilih sekolah..",
-  },
-  {
-    title: "6. Lapor diri",
-    href: "/lapor-diri",
-    description:
-      "Pastikan Anda menyelesaikan pembayaran keuangan sesuai ketentuan masing-masing sekolah untuk mengamankan posisi Anda. Anda mungkin diminta untuk melengkapi dokumen yang diperlukan. Pastikan Anda telah membaca dengan seksama informasi yang diberikan oleh sekolah tujuan Anda..",
-  },
-];
 
 export function NavigationMenuDemo() {
   return (
@@ -108,13 +71,13 @@ export function NavigationMenuDemo() {
           <NavigationMenuTrigger>Alur</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
+              {tahapan.map((tahap) => (
                 <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
+                  key={tahap.title}
+                  title={tahap.title}
+                  href={tahap.url}
                 >
-                  {component.description}
+                  {tahap.description}
                 </ListItem>
               ))}
             </ul>

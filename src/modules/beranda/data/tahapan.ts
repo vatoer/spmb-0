@@ -3,15 +3,17 @@ export interface Tahapan {
   title: string;
   url: string;
   description: string;
+  disableOnAuth?: boolean;
 }
 
 export const tahapan: Tahapan[] = [
   {
     stage: 1,
     title: "Membuat Akun",
-    url: "/buat-akun",
+    url: "/buat-akun-baru",
+    disableOnAuth: true,
     description:
-      "Isi formulir penbuatan akun dengan nama dan email anda. Anda juga bisa login menggunakan akun google anda. Anda akan mendapatkan email verifikasi untuk mengaktifkan akun anda",
+      "Isi formulir pembuatan akun dengan nama dan email anda. Anda juga bisa login menggunakan akun google anda. Anda akan mendapatkan email verifikasi untuk mengaktifkan akun anda",
   },
   {
     stage: 2,
@@ -25,7 +27,7 @@ export const tahapan: Tahapan[] = [
     title: "Pilih Sekolah",
     url: "/sekolah",
     description:
-      "Pilih Sekolah tujuan anda dan ajukan pendaftaran. Anda munkin diminta untuk melengkapi dokumen yang diperlukan.",
+      "Pilih Sekolah tujuan anda dan ajukan pendaftaran. Anda mungkin diminta untuk melengkapi dokumen yang diperlukan.",
   },
   {
     stage: 4,

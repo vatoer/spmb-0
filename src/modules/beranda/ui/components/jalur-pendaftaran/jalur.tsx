@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import { JalurPendaftaran } from "@/modules/beranda/data/jalur-pendaftaran";
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface JalurProps {
   jalur: JalurPendaftaran;

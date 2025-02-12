@@ -15,7 +15,7 @@ export const FAQ: Faq[] = [
     pertanyaan: "Bagaimana cara mendaftar di SPMB?",
     jawaban:
       "Untuk mendaftar di SPMB, Anda dapat mengikuti beberapa tahapan yang telah disediakan oleh sekolah yang Anda tuju. Tahapan tersebut antara lain membuat akun, mengisi formulir pendaftaran, memilih sekolah, melakukan pembayaran, verifikasi dan seleksi, serta lapor diri.",
-    url: "/buat-akun",
+    url: "/buat-akun-baru",
     linkText: "Buat Akun Sekarang",
   },
   {

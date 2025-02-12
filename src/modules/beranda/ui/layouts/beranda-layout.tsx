@@ -1,7 +1,7 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { cookies } from "next/headers";
 import { BerandaNavbar } from "../components/beranda-navbar";
 import { BerandaSidebar } from "../components/beranda-sidebar";
-import { cookies } from "next/headers";
 
 interface BerandaLayoutProps {
   children: React.ReactNode;

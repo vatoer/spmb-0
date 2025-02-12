@@ -1,9 +1,9 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import Link from "next/link";
+import AuthButton from "@/modules/auth/ui/components/user/auth-button";
 import Image from "next/image";
-import SearchInput from "./search-input";
-import AuthButton from "@/modules/auth/ui/components/auth-button";
+import Link from "next/link";
 import { NavigationMenuDemo } from "./nav-menu";
+import SearchInput from "./search-input";
 
 export const BerandaNavbar = () => {
   return (

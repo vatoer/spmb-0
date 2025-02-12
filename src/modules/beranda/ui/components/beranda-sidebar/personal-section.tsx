@@ -7,7 +7,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { HomeIcon, Send, UserCog } from "lucide-react";
+import { Send, UserCog } from "lucide-react";
 import Link from "next/link";
 
 const items = [
