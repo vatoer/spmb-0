@@ -10,7 +10,7 @@ const BerandaPage = () => {
     <div className="w-full ">
       <div className="flex flex-col items-center justify-start md:min-h-[calc(80vh-4rem)] ">
         <BannerUtama />
-        <InfografisTahapPendaftaran className="lg:-mt-28 z-30 px-8 py-0" />
+        <InfografisTahapPendaftaran className="" />
       </div>
       <JalurPendaftaran />
       <Statistik />

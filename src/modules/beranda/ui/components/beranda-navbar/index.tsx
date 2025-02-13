@@ -14,8 +14,9 @@ export const BerandaNavbar = () => {
           <SidebarTrigger className="" />
           <Link href="/">
             <div className="p-4 flex items-center gap-1">
-              <Image src="/window.svg" alt="Logo" width={32} height={32} />
-              <p className="text-xl font-semibold">SPMB</p>
+              <Image src="/logo.png" alt="Logo" width={24} height={24} />
+              {/* <span className="text-xl">🚀</span> */}
+              <p className="text-xl font-semibold">Siap SPMB</p>
             </div>
           </Link>
         </div>

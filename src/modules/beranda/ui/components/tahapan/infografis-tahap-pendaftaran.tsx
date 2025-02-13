@@ -14,8 +14,13 @@ export const InfografisTahapPendaftaran = async ({
   const isLoggedIn = !!user;
 
   return (
-    <div className={cn("w-full", className && className)}>
-      <div className="flex flex-col lg:flex-row flex-grow h-auto items-stretch  justify-between pb-8 md:py-8 gap-2 px-2">
+    <div
+      className={cn(
+        "lg:-mt-28 z-30 md:px-8 py-0 w-full items-center justify-center ",
+        className && className
+      )}
+    >
+      <div className="w-full flex flex-col lg:flex-row flex-grow h-auto items-center justify-center lg:items-stretch  lg:justify-between pb-8 md:py-8 gap-2 px-2">
         {
           /* Tahap Pendaftaran */
           tahapan.map((tahap, index) => {
@@ -26,7 +31,7 @@ export const InfografisTahapPendaftaran = async ({
               <Tahap
                 key={index}
                 tahap={tahap}
-                className="w-full md:w-1/3"
+                className="w-full"
                 isActive={isActive}
               />
             );

@@ -10,7 +10,7 @@ const BannerUtama = ({ className }: BannerUtamaProps) => {
   return (
     <div
       className={cn(
-        "relative w-full h-[10rem] md:min-h-[325px] flex flex-col items-center px-6 md:px-16",
+        "relative w-full h-[10rem] lg:min-h-[325px] flex flex-col items-center justify-center px-6 md:px-16",
         className
       )}
     >
