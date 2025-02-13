@@ -8,6 +8,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Send, UserCog } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 const items = [
@@ -25,6 +26,12 @@ const items = [
 ];
 
 const PersonalSidebar = () => {
+  const session = useSession();
+
+  if (session.status === "unauthenticated") {
+    return null;
+  }
+
   return (
     <SidebarGroup>
       <SidebarGroupContent>

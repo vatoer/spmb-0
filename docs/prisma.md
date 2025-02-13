@@ -7,4 +7,7 @@ reference
 ```sh
 pnpm prisma db push --schema=./prisma/db-auth/schema.prisma
 pnpm prisma generate --schema=./prisma/db-auth/schema.prisma
+
+pnpm prisma migrate deploy --schema=./prisma/db-auth/schema.prisma
+
 ```
