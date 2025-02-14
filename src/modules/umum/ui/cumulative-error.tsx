@@ -6,15 +6,15 @@ import {
   Merge,
 } from "react-hook-form";
 
-type CummulativeErrorsProps<T extends FieldValues> = {
+type CumulativeErrorsProps<T extends FieldValues> = {
   errors: FieldErrors<T>;
   verbose?: boolean;
 };
 
-const CummulativeErrors = <T extends FieldValues>({
+const CumulativeErrors = <T extends FieldValues>({
   errors,
   verbose = false,
-}: CummulativeErrorsProps<T>) => {
+}: CumulativeErrorsProps<T>) => {
   const hasErrors = Object.keys(errors).length > 0;
 
   if (!hasErrors) return null;
@@ -77,4 +77,4 @@ const CummulativeErrors = <T extends FieldValues>({
   );
 };
 
-export default CummulativeErrors;
+export default CumulativeErrors;

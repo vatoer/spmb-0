@@ -22,8 +22,6 @@ pnpm prisma generate --schema=./prisma/db-spmb/schema.prisma
 
 pnpm prisma migrate deploy --schema=./prisma/db-spmb/schema.prisma
 
-pnpm prisma db seed --schema=./prisma/db-spmb/schema.prisma
-
 ```
 
 ```sh
@@ -78,14 +76,14 @@ pnpm add -D ts-node typescript @types/node
 
 add to `package.json`
 
-```json
-"prisma": {
-  "seed:spmb": "ts-node ./prisma/db-spmb/seed.ts"
-}
+```diff
+ "scripts": {
++    "prisma:seed:spmb": "tsx prisma/db-spmb/seed.ts"
+  },
 ```
 
 run seed
 
 ```sh
-pnpm prisma db seed:spmb
+pnpm prisma:seed:spmb
 ```

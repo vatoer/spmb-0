@@ -82,9 +82,16 @@ export type DataOrangTua = z.infer<typeof dataOrangTuaSchema>;
 
 export type Ortu = z.infer<typeof ortuSchema>;
 
-export const genericTanggalSchema = z.coerce
-  .date()
-  .min(new Date("1900-01-01"), { message: "Too old" });
+export const genericTanggalSchema = z
+  .string()
+  .refine(
+    (val) => {
+      const date = new Date(val);
+      return !isNaN(date.getTime());
+    },
+    { message: "Invalid date" }
+  )
+  .transform((val) => new Date(val));
 
 export enum Agama {
   Islam = "Islam",

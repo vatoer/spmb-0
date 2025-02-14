@@ -17,7 +17,8 @@ import dynamic from "next/dynamic";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { useWizardForm } from "@/modules/pendaftaran/hooks/use-wizard-form";
-import CummulativeErrors from "@/modules/umum/ui/cummulative-error";
+import CumulativeErrors from "@/modules/umum/ui/cumulative-error";
+import InputDatePicker from "@/modules/umum/ui/date-picker";
 import { ChevronDown } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -133,23 +134,6 @@ const DataDiriForm = ({ nextStep = () => {} }: DataDiriFormProps) => {
 
           <FormField
             control={form.control}
-            name="nisn"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>NISN</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="10 digit"
-                    {...field}
-                    className="bg-background h-12"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="nama"
             render={({ field }) => (
               <FormItem>
@@ -165,40 +149,85 @@ const DataDiriForm = ({ nextStep = () => {} }: DataDiriFormProps) => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="nik"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>NIK</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="16 digit"
-                    {...field}
-                    className="bg-background h-12"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="tempatLahir"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Tempat Lahir</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Kota/Kabupaten kelahiran"
-                    {...field}
-                    className="bg-background h-12"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="flex flex-col md:flex-row gap-2">
+            <FormField
+              control={form.control}
+              name="nik"
+              render={({ field }) => (
+                <FormItem className="md:w-1/2">
+                  <FormLabel>NIK</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="16 digit"
+                      {...field}
+                      className="bg-background h-12"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="nisn"
+              render={({ field }) => (
+                <FormItem className="md:w-1/2">
+                  <FormLabel>NISN</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="10 digit"
+                      {...field}
+                      className="bg-background h-12"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex flex-col md:flex-row gap-2">
+            <FormField
+              control={form.control}
+              name="tempatLahir"
+              render={({ field }) => (
+                <FormItem className="md:w-1/2">
+                  <FormLabel>Tempat Lahir</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Kota/Kabupaten kelahiran"
+                      {...field}
+                      className="bg-background h-12"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="tanggalLahir"
+              render={({ field }) => (
+                <FormItem className="md:w-1/2">
+                  <FormLabel htmlFor="tanggal-lahir">Tempat Lahir</FormLabel>
+                  <FormControl>
+                    <InputDatePicker
+                      calendarOptions={{
+                        fromDate: new Date(
+                          new Date().setFullYear(new Date().getFullYear() - 18)
+                        ),
+                        toDate: new Date(
+                          new Date().setFullYear(new Date().getFullYear() - 3)
+                        ),
+                      }}
+                      inputId="tanggal-lahir"
+                      onDateSelected={(date) => field.onChange(date)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <FormField
             control={form.control}
             name="jenjangDikdasmen"
@@ -377,7 +406,7 @@ const DataDiriForm = ({ nextStep = () => {} }: DataDiriFormProps) => {
                     id="select-desa-kelurahan-label"
                     htmlFor="select-desa-kelurahan"
                   >
-                    Kecamatan
+                    Desa/Kelurahan
                   </FormLabel>
                   <FormControl>
                     <SelectWilayah
@@ -458,7 +487,7 @@ const DataDiriForm = ({ nextStep = () => {} }: DataDiriFormProps) => {
             />
           </div>
 
-          <CummulativeErrors errors={form.formState.errors} verbose />
+          <CumulativeErrors errors={form.formState.errors} verbose />
 
           <div
             className={cn(
