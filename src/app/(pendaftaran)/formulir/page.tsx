@@ -1,6 +1,6 @@
 import PendaftaranBreadcrumbs, {
   Item,
-} from "@/modules/pendaftaran/ui/breadcrumbs";
+} from "@/modules/pendaftaran/ui/components/breadcrumbs";
 import Link from "next/link";
 
 const breadcrumbs: Item[] = [];

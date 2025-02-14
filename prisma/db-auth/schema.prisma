@@ -6,13 +6,12 @@
 
 generator client {
   provider = "prisma-client-js"
-  output        = "../../node_modules/@prisma-db-auth/client"
-
+  output   = "../../node_modules/@prisma-db-auth/client"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL_AUTH")
 }
 
 model Account {

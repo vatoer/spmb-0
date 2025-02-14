@@ -13,6 +13,7 @@ export enum JenjangDikdasmen {
   "SD" = "SD",
   "SMP" = "SMP",
   "SMA" = "SMA",
+  "LAINNYA" = "-",
 }
 
 export const jenjangDikdasmenSchema = z.nativeEnum(JenjangDikdasmen, {
@@ -92,7 +93,7 @@ export enum Agama {
   Hindu = "Hindu",
   Buddha = "Buddha",
   Konghucu = "Konghucu",
-  Lainnya = "Lainnya",
+  Lainnya = "-",
 }
 
 export const agamaSchema = z.nativeEnum(Agama, {
@@ -122,10 +123,11 @@ export const StatusDomisiliEnum = z.enum([
 export const domisiliSchema = z.object({
   statusDomisili: StatusDomisiliEnum,
   alamat: z.string().min(3).max(255),
-  provinsi: z.string().min(3).max(255),
-  kotaKabupaten: z.string().min(3).max(255),
-  kecamatan: z.string().min(3).max(255),
-  kelurahan: z.string().min(3).max(255),
+  wilayah: z.string().min(2).max(10),
+  provinsi: z.string().min(2).max(2),
+  kotaKabupaten: z.string().min(4).max(4),
+  kecamatan: z.string().min(6).max(6),
+  desaKelurahan: z.string().min(10).max(10),
   rt: z.string().min(1).max(3),
   rw: z.string().min(1).max(3),
 });

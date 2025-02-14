@@ -4,11 +4,25 @@ reference
 
 <https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project/relational-databases-typescript-postgresql>
 
+## database auth
+
 ```sh
 pnpm prisma db push --schema=./prisma/db-auth/schema.prisma
 pnpm prisma generate --schema=./prisma/db-auth/schema.prisma
 
 pnpm prisma migrate deploy --schema=./prisma/db-auth/schema.prisma
+
+```
+
+## database spmb
+
+```sh
+pnpm prisma db push --schema=./prisma/db-spmb/schema.prisma
+pnpm prisma generate --schema=./prisma/db-spmb/schema.prisma
+
+pnpm prisma migrate deploy --schema=./prisma/db-spmb/schema.prisma
+
+pnpm prisma db seed --schema=./prisma/db-spmb/schema.prisma
 
 ```
 
@@ -54,4 +68,24 @@ CREATE ROLE new_power_user WITH LOGIN SUPERUSER PASSWORD 'your_password';
 
 # Exit psql
 \q
+```
+
+## Seeding
+
+```sh
+pnpm add -D ts-node typescript @types/node
+```
+
+add to `package.json`
+
+```json
+"prisma": {
+  "seed:spmb": "ts-node ./prisma/db-spmb/seed.ts"
+}
+```
+
+run seed
+
+```sh
+pnpm prisma db seed:spmb
 ```

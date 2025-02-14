@@ -1,0 +1,27 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../node_modules/@prisma-db-spmb/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL_SPMB")
+}
+
+model WilayahAdministratif {
+  id      String  @id
+  nama    String  @db.VarChar
+  indukId String? @map("induk_id") @db.VarChar
+  tingkat Int     @default(1) // 1: Provinsi, 2: Kota/Kabupaten, 3: Kecamatan, 4: Desa/Kelurahan 
+
+  induk      WilayahAdministratif?  @relation("IndukRelation", fields: [indukId], references: [id])
+  subWilayah WilayahAdministratif[] @relation("IndukRelation")
+
+  @@map("wilayah_administratif")
+}

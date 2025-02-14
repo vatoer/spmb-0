@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import PendaftaranBreadcrumbs, {
   Item,
-} from "@/modules/pendaftaran/ui/breadcrumbs";
+} from "@/modules/pendaftaran/ui/components/breadcrumbs";
+import DataDiriForm from "@/modules/pendaftaran/ui/components/formulir/data-diri";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
@@ -22,7 +23,8 @@ const FormulirDataDiriPage = () => {
           <h1 className="hidden md:block text-3xl font-bold z-20 text-center">
             Data Diri
           </h1>
-          <div className="mt-auto flex flex-col gap-2 w-full  items-end">
+          <DataDiriForm />
+          <div className="mt-auto flex flex-col gap-2 w-full items-end">
             <Link href="/formulir/data-orang-tua">
               <Button variant={"outline"}>
                 Data Orang Tua

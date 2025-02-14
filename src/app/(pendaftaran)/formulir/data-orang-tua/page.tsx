@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import PendaftaranBreadcrumbs, {
   Item,
-} from "@/modules/pendaftaran/ui/breadcrumbs";
+} from "@/modules/pendaftaran/ui/components/breadcrumbs";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
