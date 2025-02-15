@@ -65,7 +65,7 @@ const checkParentPrefix = (parent: string, child: string) => {
   return child.startsWith(parent);
 };
 
-const DataDiriForm = ({ nextStep = () => {} }: DataDiriFormProps) => {
+export const DataDiriForm = ({ nextStep = () => {} }: DataDiriFormProps) => {
   const { formData, updateFormData } = useWizardForm(defaultValuesDataDiri);
   const form = useForm<DataDiri>({
     resolver: zodResolver(dataDiriSchema),
@@ -221,6 +221,7 @@ const DataDiriForm = ({ nextStep = () => {} }: DataDiriFormProps) => {
                       }}
                       inputId="tanggal-lahir"
                       onDateSelected={(date) => field.onChange(date)}
+                      className="h-12"
                     />
                   </FormControl>
                   <FormMessage />

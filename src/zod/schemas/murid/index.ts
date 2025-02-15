@@ -58,6 +58,16 @@ export enum Pekerjaan {
   "Lainnya" = "Lain-lain",
 }
 
+export enum RentangPendapatan {
+  "TidakBerpendapatan" = "Tidak berpendapatan",
+  "KurangDari1Juta" = "Kurang dari 1 juta",
+  "1JutaSampai2Juta" = "1 juta sampai 2 juta",
+  "2JutaSampai3Juta" = "2 juta sampai 3 juta",
+  "3JutaSampai5Juta" = "3 juta sampai 5 juta",
+  "5JutaSampai10Juta" = "5 juta sampai 10 juta",
+  "LebihDari10Juta" = "Lebih dari 10 juta",
+}
+
 export const pekerjaanSchema = z.nativeEnum(Pekerjaan, {
   errorMap: () => ({ message: "Pilih Pekerjaan" }),
 });
@@ -68,9 +78,15 @@ export const ortuSchema = z.object({
   kk: z.string().min(16).max(16),
   jenisKelamin: jenisKelaminSchema,
   tahunWafat: z.coerce.number().optional().nullable(),
-  jenjangPendidikan: jenjangPendidikanSchema,
-  pekerjaan: pekerjaanSchema,
-  penghasilan: z.coerce.number().default(0).optional(),
+  jenjangPendidikan: z
+    .string()
+    .min(1, { message: "Pilih pendidikan" })
+    .max(255), //jenjangPendidikanSchema,
+  pekerjaan: z.string().min(1, { message: "Pilih pekerjaan" }).max(255),
+  pendapatan: z
+    .string()
+    .min(1, { message: "Pilih rentang pendapatan" })
+    .max(255), //z.coerce.number().default(0).optional(),
 });
 
 export const dataOrangTuaSchema = z.object({

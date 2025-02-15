@@ -83,7 +83,7 @@ const BaseInputDatePicker = ({
         <PopoverTrigger asChild>
           <div className={cn("flex flex-col w-full ")}>
             <div className="relative group">
-              <CalendarIcon className="absolute top-2 ml-2 text-gray-300" />
+              <CalendarIcon className="absolute top-1/2 transform -translate-y-1/2 ml-2 text-gray-300" />
               <input
                 placeholder="yyyy-mm-dd"
                 readOnly
