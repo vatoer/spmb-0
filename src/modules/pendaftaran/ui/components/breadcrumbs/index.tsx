@@ -33,7 +33,7 @@ const PendaftaranBreadcrumbs = ({ items }: PendaftaranBreadcrumbsProps) => {
   }
 
   return (
-    <Breadcrumb className="items-center justify-start w-full ">
+    <Breadcrumb className="items-center justify-start w-full px-2">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink href={items[0].href}>{items[0].name}</BreadcrumbLink>
@@ -48,9 +48,13 @@ const PendaftaranBreadcrumbs = ({ items }: PendaftaranBreadcrumbsProps) => {
                   <span className="sr-only">Toggle menu</span>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start">
-                  <DropdownMenuItem>Documentation</DropdownMenuItem>
-                  <DropdownMenuItem>Themes</DropdownMenuItem>
-                  <DropdownMenuItem>GitHub</DropdownMenuItem>
+                  {items.slice(1, -1).map((item, index) => (
+                    <DropdownMenuItem key={index}>
+                      <BreadcrumbLink href={item.href}>
+                        {item.name}
+                      </BreadcrumbLink>
+                    </DropdownMenuItem>
+                  ))}
                 </DropdownMenuContent>
               </DropdownMenu>
             </BreadcrumbItem>

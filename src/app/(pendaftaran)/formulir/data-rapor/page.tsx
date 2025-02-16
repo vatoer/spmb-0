@@ -2,20 +2,20 @@ import { Item } from "@/modules/pendaftaran/ui/components/breadcrumbs";
 import FormulirContainer, {
   FormulirContainerFooter,
 } from "@/modules/pendaftaran/ui/components/formulir/formulir-container";
-import DataSekolahAsalForm from "@/modules/pendaftaran/ui/components/formulir/sekolah-asal";
+import DataRaporForm from "@/modules/pendaftaran/ui/components/formulir/rapor";
 
 const breadcrumbs: Item[] = [
   { name: "Formulir", href: "/formulir" },
-  { name: "Sekolah Asal", href: "/formulir/sekolah-asal" },
+  { name: "Rapor", href: "/formulir/data-rapor" },
 ];
 
 const FormulirSekolanhAsalPage = () => {
   return (
-    <FormulirContainer breadcrumbs={breadcrumbs} title="Sekolah Asal">
-      <DataSekolahAsalForm />
+    <FormulirContainer breadcrumbs={breadcrumbs} title="Rapor">
+      <DataRaporForm />
       <FormulirContainerFooter
-        prev={{ href: "/formulir/data-orang-tua", title: "Data Diri" }}
-        next={{ href: "/formulir/data-rapor", title: "Rapor" }}
+        prev={{ href: "/formulir/sekolah-asal", title: "Sekolah Asal" }}
+        next={{ href: "/formulir/sekolah-tujuan", title: "Sekolah Tujuan" }}
       />
     </FormulirContainer>
   );

@@ -125,6 +125,7 @@ export const DataOrangTuaForm = ({
 
   useEffect(() => {
     form.reset(formData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form]);
 
   return (
@@ -289,7 +290,7 @@ export const DataOrangTuaForm = ({
 
           <div className="h-0 py-4 border-b-2"></div>
 
-          <h1 className="text-lg pt-4">Ayah</h1>
+          <h1 className="text-lg pt-4">Data Ayah</h1>
 
           <FormField
             control={form.control}
