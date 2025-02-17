@@ -75,6 +75,11 @@ CREATE INDEX idx_gin_trgm_alamat ON sekolah USING GIN (alamat gin_trgm_ops);
 DROP function if exists fts_cari_sekolah;
 DROP function if exists fts_cari_sekolah_alt1;
 
+-- select * from fts_cari_sekolah('sma 2 bulu kambang');
+
+-- select * from fts_cari_sekolah_alt1('sma 2 bulu kambang');
+
+
 CREATE OR REPLACE FUNCTION fts_cari_sekolah(search_query TEXT)
 RETURNS TABLE (
     npsn VARCHAR(10),
@@ -87,7 +92,16 @@ RETURNS TABLE (
     rank_no_stemming DOUBLE PRECISION,
     sim_in_nama DOUBLE PRECISION,
     sim_in_alamat DOUBLE PRECISION,
-    sim_in_kelurahan_desa DOUBLE PRECISION
+    sim_in_kelurahan_desa DOUBLE PRECISION,
+    -- dapo_wilayah columns
+    kode_wilayah VARCHAR,
+    nama_wilayah VARCHAR,
+    id_level_wilayah INT4,
+    mst_kode_wilayah VARCHAR ,
+    induk_provinsi VARCHAR ,
+    kode_wilayah_induk_provinsi VARCHAR ,
+    induk_kabupaten VARCHAR ,
+    kode_wilayah_induk_kabupaten VARCHAR 
 ) 
 AS $$
 BEGIN
@@ -95,24 +109,31 @@ BEGIN
     WITH query_data AS (
         SELECT search_query,
                to_tsquery('indonesian', string_agg(word, ' & ')) AS tsquery,
-			   to_tsquery('simple', string_agg(word, ' & ')) AS tsquery_no_stemming,  -- No Stemming
+               to_tsquery('simple', string_agg(word, ' & ')) AS tsquery_no_stemming,  -- No Stemming
                split_part(search_query, ' ', array_length(string_to_array(search_query, ' '), 1)) AS search_query_last_word
         FROM unnest(string_to_array(search_query, ' ')) AS word
     )
-    SELECT rs.npsn, rs.nama, rs.alamat, rs.kelurahan_desa, rs.dapo_wilayah_id, rs.status,
-           ts_rank(rs.tsv, qd.tsquery)::DOUBLE PRECISION AS rank,  
-       	   ts_rank(rs.tsv_no_stemming, qd.tsquery_no_stemming)::DOUBLE PRECISION AS rank_no_stemming,  	
-           similarity(rs.nama, qd.search_query)::DOUBLE PRECISION AS sim_in_nama,  
-           similarity(rs.alamat, qd.search_query_last_word)::DOUBLE PRECISION AS sim_in_alamat,  
-           similarity(rs.kelurahan_desa, qd.search_query_last_word)::DOUBLE PRECISION AS sim_in_kelurahan_desa  
-    FROM sekolah rs, query_data qd
-    WHERE rs.tsv @@ qd.tsquery  
-	   OR rs.tsv_no_stemming @@ qd.tsquery_no_stemming  -- Ensure no-stemming search works
-       OR rs.nama % qd.search_query  
+    SELECT 
+        s.npsn, s.nama, s.alamat, s.kelurahan_desa, s.dapo_wilayah_id, s.status,
+        ts_rank(s.tsv, qd.tsquery)::DOUBLE PRECISION AS rank,  
+        ts_rank(s.tsv_no_stemming, qd.tsquery_no_stemming)::DOUBLE PRECISION AS rank_no_stemming,  	
+        similarity(s.nama, qd.search_query)::DOUBLE PRECISION AS sim_in_nama,  
+        similarity(s.alamat, qd.search_query_last_word)::DOUBLE PRECISION AS sim_in_alamat,  
+        similarity(s.kelurahan_desa, qd.search_query_last_word)::DOUBLE PRECISION AS sim_in_kelurahan_desa,
+        -- dapo_wilayah columns
+        w.kode_wilayah, w.nama AS nama_wilayah, w.id_level_wilayah, w.mst_kode_wilayah,
+        w.induk_provinsi, w.kode_wilayah_induk_provinsi, w.induk_kabupaten, w.kode_wilayah_induk_kabupaten
+    FROM sekolah s
+    JOIN dapo_wilayah w ON s.dapo_wilayah_id = w.kode_wilayah  -- Join the wilayah table
+    CROSS JOIN query_data qd
+    WHERE s.tsv @@ qd.tsquery  
+       OR s.tsv_no_stemming @@ qd.tsquery_no_stemming  -- Ensure no-stemming search works
+       OR s.nama % qd.search_query  
     ORDER BY rank DESC, sim_in_nama DESC, sim_in_kelurahan_desa DESC, sim_in_alamat DESC  
     LIMIT 50;
 END;
 $$ LANGUAGE plpgsql;
+
 
 CREATE OR REPLACE FUNCTION fts_cari_sekolah_alt1(search_query TEXT)
 RETURNS TABLE (
@@ -126,7 +147,16 @@ RETURNS TABLE (
     rank_no_stemming DOUBLE PRECISION,
     sim_in_nama DOUBLE PRECISION,
     sim_in_alamat DOUBLE PRECISION,
-    sim_in_kelurahan_desa DOUBLE PRECISION
+    sim_in_kelurahan_desa DOUBLE precision,
+    -- dapo_wilayah columns
+    kode_wilayah VARCHAR,
+    nama_wilayah VARCHAR,
+    id_level_wilayah INT4,
+    mst_kode_wilayah VARCHAR ,
+    induk_provinsi VARCHAR ,
+    kode_wilayah_induk_provinsi VARCHAR ,
+    induk_kabupaten VARCHAR ,
+    kode_wilayah_induk_kabupaten VARCHAR 
 ) 
 AS $$
 BEGIN
@@ -137,16 +167,21 @@ BEGIN
                plainto_tsquery('simple', search_query) AS tsquery_no_stemming,  
                split_part(search_query, ' ', array_length(string_to_array(search_query, ' '), 1)) AS search_query_last_word
     )
-    SELECT rs.npsn, rs.nama, rs.alamat, rs.kelurahan_desa, rs.dapo_wilayah_id, rs.status,
-           ts_rank(rs.tsv, qd.tsquery)::DOUBLE PRECISION AS rank,  
-           ts_rank(rs.tsv_no_stemming, qd.tsquery_no_stemming)::DOUBLE PRECISION AS rank_no_stemming,  	
-           similarity(rs.nama, qd.search_query)::DOUBLE PRECISION AS sim_in_nama,  
-           similarity(rs.alamat, qd.search_query_last_word)::DOUBLE PRECISION AS sim_in_alamat,  
-           similarity(rs.kelurahan_desa, qd.search_query_last_word)::DOUBLE PRECISION AS sim_in_kelurahan_desa  
-    FROM sekolah rs, query_data qd
-    WHERE (rs.tsv @@ qd.tsquery AND similarity(rs.nama, qd.search_query) > 0.3)
-       OR (rs.tsv_no_stemming @@ qd.tsquery_no_stemming AND similarity(rs.nama, qd.search_query) > 0.3)
-       OR (rs.nama % qd.search_query AND similarity(rs.nama, qd.search_query) > 0.4)  
+    SELECT s.npsn, s.nama, s.alamat, s.kelurahan_desa, s.dapo_wilayah_id, s.status,
+           ts_rank(s.tsv, qd.tsquery)::DOUBLE PRECISION AS rank,  
+           ts_rank(s.tsv_no_stemming, qd.tsquery_no_stemming)::DOUBLE PRECISION AS rank_no_stemming,  	
+           similarity(s.nama, qd.search_query)::DOUBLE PRECISION AS sim_in_nama,  
+           similarity(s.alamat, qd.search_query_last_word)::DOUBLE PRECISION AS sim_in_alamat,  
+           similarity(s.kelurahan_desa, qd.search_query_last_word)::DOUBLE PRECISION AS sim_in_kelurahan_desa ,
+ 		-- dapo_wilayah columns
+        w.kode_wilayah, w.nama AS nama_wilayah, w.id_level_wilayah, w.mst_kode_wilayah,
+        w.induk_provinsi, w.kode_wilayah_induk_provinsi, w.induk_kabupaten, w.kode_wilayah_induk_kabupaten
+     FROM sekolah s
+    JOIN dapo_wilayah w ON s.dapo_wilayah_id = w.kode_wilayah  -- Join the wilayah table
+    CROSS JOIN query_data qd
+    WHERE (s.tsv @@ qd.tsquery AND similarity(s.nama, qd.search_query) > 0.3)
+       OR (s.tsv_no_stemming @@ qd.tsquery_no_stemming AND similarity(s.nama, qd.search_query) > 0.3)
+       OR (s.nama % qd.search_query AND similarity(s.nama, qd.search_query) > 0.4)  
     ORDER BY rank DESC, sim_in_nama DESC, sim_in_kelurahan_desa DESC, sim_in_alamat DESC  
     LIMIT 50;
 END;

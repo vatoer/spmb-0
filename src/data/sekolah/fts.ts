@@ -7,6 +7,9 @@ interface FtsCariSekolahResultWithDynamicKeys {
   nama: string;
   alamat?: string;
   kelurahanDesa?: string;
+  namaWilayah?: string; // ini kecamatan
+  indukKabupaten?: string;
+  indukProvinsi?: string;
   dapoWilayahId: string;
   status?: string;
   rank: number;

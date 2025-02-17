@@ -19,9 +19,11 @@ export const HasilPencarian = ({
 
 export const RowSekolah = ({ sekolah }: { sekolah: FtsCariSekolahResult }) => {
   return (
-    <div className="flex flex-col text-sm p-2 ">
-      <div>
-        <span className="text-blue-500 hover:underline">{sekolah.nama}</span>
+    <div className="flex flex-col text-sm p-2 w-full">
+      <div className="flex flex-auto flex-row w-full text-blue-500 hover:underline hover:cursor-pointer">
+        <span className="text-blue-500 hover:underline hover:cursor-pointer text-xl">
+          {sekolah.nama}
+        </span>
       </div>
       <div>
         <span>{sekolah.npsn}</span>
@@ -29,8 +31,11 @@ export const RowSekolah = ({ sekolah }: { sekolah: FtsCariSekolahResult }) => {
       <div className="flex flex-auto flex-row text-xs">
         <span>{sekolah.alamat}</span>
       </div>
-      <div className="flex flex-auto flex-row text-xs">
-        <span>Desa/kelurahan: {sekolah.kelurahanDesa}</span>
+      <div className="flex flex-auto flex-row text-sm">
+        <span>
+          {sekolah.kelurahanDesa} - {sekolah.namaWilayah} -{" "}
+          {sekolah.indukKabupaten} - {sekolah.indukProvinsi}
+        </span>
       </div>
     </div>
   );

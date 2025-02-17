@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "prisma:seed:spmb": "tsx prisma/db-spmb/seed.ts",
-    "prisma:seed:sekolah": "tsx prisma/db-spmb/seed-sekolah.ts"
+    "prisma:seed:sekolah": "tsx prisma/db-spmb/seed-sekolah.ts",
+    "prisma:seed:dapo-wilayah": "tsx prisma/db-spmb/seed-dapo-wilayah.ts"
   },
   "prisma": {
     "seed": "tsx prisma/db-spmb/seed.ts"
