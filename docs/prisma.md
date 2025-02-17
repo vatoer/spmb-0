@@ -24,6 +24,17 @@ pnpm prisma migrate deploy --schema=./prisma/db-spmb/schema.prisma
 
 ```
 
+## manually add tsv on sekolah
+
+```sh
+# pnpm prisma migrate reset --schema=./prisma/db-spmb/schema.prisma
+
+pnpm prisma migrate dev --name init  --schema=./prisma/db-spmb/schema.prisma
+pnpm prisma migrate dev --name add_tsvector_on_sekolah --create-only --schema=./prisma/db-spmb/schema.prisma
+pnpm prisma migrate deploy --schema=./prisma/db-spmb/schema.prisma
+# pnpm prisma migrate dev --name add_kelurahan_desa --schema=./prisma/db-spmb/schema.prisma
+```
+
 ```sh
 
 # Generate a secure password
