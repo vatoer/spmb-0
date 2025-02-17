@@ -27,10 +27,14 @@ pnpm prisma migrate deploy --schema=./prisma/db-spmb/schema.prisma
 ## manually add tsv on sekolah
 
 ```sh
+# pnpm prisma db push --schema=./prisma/db-spmb/schema.prisma
 # pnpm prisma migrate reset --schema=./prisma/db-spmb/schema.prisma
 
 pnpm prisma migrate dev --name init  --schema=./prisma/db-spmb/schema.prisma
 pnpm prisma migrate dev --name add_tsvector_on_sekolah --create-only --schema=./prisma/db-spmb/schema.prisma
+# pnpm prisma migrate status --schema=./prisma/db-spmb/schema.prisma
+# pnpm prisma migrate resolve add_tsvector_on_sekolah --rolled-back 20250217115438_add_tsvector_on_sekolah --schema=./prisma/db-spmb/schema.prisma
+
 pnpm prisma migrate deploy --schema=./prisma/db-spmb/schema.prisma
 # pnpm prisma migrate dev --name add_kelurahan_desa --schema=./prisma/db-spmb/schema.prisma
 ```

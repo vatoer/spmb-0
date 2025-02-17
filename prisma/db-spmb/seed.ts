@@ -18,17 +18,15 @@ const processCsvFile = async (
   console.log(`Processing file: ${fullPath}`);
 
   const wilayahAdministrasi: CsvWilayahAdministratif[] = [];
-
   return new Promise<CsvWilayahAdministratif[]>((resolve, reject) => {
     fs.createReadStream(fullPath)
       .pipe(csv({ separator: ";" }))
       .on("data", (data) => {
-        console.log(data);
         data.tingkat = tingkat;
         wilayahAdministrasi.push(data);
       })
       .on("end", () => {
-        console.log(`CSV file ${filePath} successfully processed`);
+        console.log(`\nCSV file ${filePath} successfully processed`);
         resolve(wilayahAdministrasi);
       })
       .on("error", (error) => {
@@ -39,9 +37,9 @@ const processCsvFile = async (
 };
 
 const seedWilayahAdministratif = async () => {
-  // delete all data
-  console.log("Deleting all data");
-  await dbSpmb.wilayahAdministratif.deleteMany({});
+  // truncate all data
+  console.log("Truncating all data wilayah_administratif");
+  await dbSpmb.$executeRaw`TRUNCATE TABLE wilayah_administratif`;
 
   const csvFiles = [
     { path: "csv/wilayah-administratif/provinsi.csv", tingkat: 1 },

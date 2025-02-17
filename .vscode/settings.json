@@ -27,7 +27,8 @@
   // Terminal settings
   "terminal.integrated.defaultProfile.linux": "bash",
   "terminal.integrated.defaultProfile.osx": "zsh",
-  "terminal.integrated.defaultProfile.windows": "Command Prompt",
+  // "terminal.integrated.defaultProfile.windows": "Command Prompt",
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
 
   // Version Control
   "git.ignoreLimitWarning": true,
@@ -51,5 +52,8 @@
 
   "cSpell.language": "en,id-id",
 
-  "auto-rename-tag.activationOnLanguage": ["html", "xml", "php", "javascript"]
+  "auto-rename-tag.activationOnLanguage": ["html", "xml", "php", "javascript"],
+  "[sql]": {
+    "editor.defaultFormatter": "ms-ossdata.vscode-postgresql"
+  }
 }

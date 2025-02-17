@@ -26,7 +26,7 @@ CREATE TABLE "dapo_wilayah" (
 CREATE TABLE "sekolah" (
     "id" TEXT NOT NULL,
     "nama" VARCHAR NOT NULL,
-    "npsn" CHAR(8),
+    "npsn" VARCHAR(10),
     "status" VARCHAR,
     "bentuk_pendidikan" TEXT,
     "alamat" VARCHAR NOT NULL,
