@@ -15,6 +15,8 @@ const SekolahPage = async ({
   const slug = (await params).slug;
   const [npsn, ...rest] = slug;
 
+  console.log(npsn, rest);
+
   if (!isNpsn(npsn)) {
     notFound();
   }

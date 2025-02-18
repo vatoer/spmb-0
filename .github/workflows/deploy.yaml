@@ -3,7 +3,7 @@ name: Deploy to Ubuntu Server
 on:
   push:
     branches:
-      - deploy # Change this to your default branch
+      - main # Change this to your default branch
 jobs:
   deploy:
     runs-on: ubuntu-22.04
@@ -43,14 +43,16 @@ jobs:
 
       - name: Run Prisma Push
         env:
-          DATABASE_URL_ADMIN: ${{ secrets.DATABASE_URL_ADMIN }} # Existing secret
-          DATABASE_URL_SPMB: ${{ secrets.DATABASE_URL_SPMB }} # New secret added
+          DATABASE_URL_ADMIN: ${{ secrets.DATABASE_URL_AUTH_ADMIN }} # Existing secret
+          DATABASE_URL_SPMB: ${{ secrets.DATABASE_URL_SPMB_ADMIN }} # New secret added
         # run: pnpm run prisma:db-push
         run: |
           # pnpm run prisma:db-push
           # pnpm run prisma:baseline
-          pnpm run prisma:deploy
-          pnpm run prisma:generate
+          pnpm run prisma:auth:deploy
+          pnpm run prisma:auth:generate
+          pnpm run prisma:spmb:deploy
+          pnpm run prisma:spmb:generate
 
       - name: Build the application
         env:
@@ -79,7 +81,7 @@ jobs:
           tar -xzf ${{ secrets.DIR_TARGET }}/build.tar.gz -C ${{ secrets.DIR_TARGET }}
           cd ${{ secrets.DIR_TARGET }}
           git pull origin main
-          pm2 stop d01 || true
+          pm2 stop siap-spmb || true
           pnpm install
-          pm2 restart d01 || pm2 start pnpm --name d01 -- start -p 3030
+          pm2 restart siap-spmb || pm2 start pnpm --name siap-spmb -- start -p 3030
           EOF

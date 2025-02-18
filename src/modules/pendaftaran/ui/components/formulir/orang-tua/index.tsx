@@ -19,27 +19,13 @@ import {
   RentangPendapatan,
 } from "@/zod/schemas/murid";
 import { zodResolver } from "@hookform/resolvers/zod";
-import dynamic from "next/dynamic";
 // import { SelectProvinsi } from "@/components/select-provinsi";
-import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { useWizardForm } from "@/modules/pendaftaran/hooks/use-wizard-form";
 import CumulativeErrors from "@/modules/umum/ui/cumulative-error";
 import { ChevronDown } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-
-const SelectWilayah = dynamic(
-  () => import("@/modules/umum/ui/select-wilayah"),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="">
-        <Skeleton className="h-12 w-full" />
-      </div>
-    ),
-  }
-);
 
 interface DataOrangTuaFormProps {
   nextStep?: () => void;
@@ -90,11 +76,6 @@ const jenjangPendidikanOptions = Object.entries(JenjangPendidikan).map(
   })
 );
 
-const checkParentPrefix = (parent: string, child: string) => {
-  if (parent === "-" || parent === "") return false;
-  return child.startsWith(parent);
-};
-
 export const DataOrangTuaForm = ({
   nextStep = () => {},
 }: DataOrangTuaFormProps) => {
@@ -115,7 +96,7 @@ export const DataOrangTuaForm = ({
     // },
   });
 
-  const { handleSubmit, watch, setValue } = form;
+  const { handleSubmit } = form;
 
   const onSubmit = (data: DataOrangTua) => {
     console.log(data);

@@ -10,32 +10,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  DataSekolahAsal,
-  dataSekolahAsalSchema,
-  JenjangPendidikan,
-} from "@/zod/schemas/murid";
+import { DataSekolahAsal, dataSekolahAsalSchema } from "@/zod/schemas/murid";
 import { zodResolver } from "@hookform/resolvers/zod";
-import dynamic from "next/dynamic";
 // import { SelectProvinsi } from "@/components/select-provinsi";
-import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { useWizardForm } from "@/modules/pendaftaran/hooks/use-wizard-form";
 import CumulativeErrors from "@/modules/umum/ui/cumulative-error";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-
-const SelectWilayah = dynamic(
-  () => import("@/modules/umum/ui/select-wilayah"),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="">
-        <Skeleton className="h-12 w-full" />
-      </div>
-    ),
-  }
-);
 
 interface DataSekolahAsalFormProps {
   nextStep?: () => void;
@@ -49,13 +31,6 @@ const defaultValuesDataSekolahAsal: DataSekolahAsal = {
   tahunLulus: undefined,
 };
 
-const jenjangPendidikanOptions = Object.entries(JenjangPendidikan).map(
-  ([value, label]) => ({
-    value,
-    label,
-  })
-);
-
 export const DataSekolahAsalForm = ({
   nextStep = () => {},
 }: DataSekolahAsalFormProps) => {
@@ -67,7 +42,7 @@ export const DataSekolahAsalForm = ({
     defaultValues: formData,
   });
 
-  const { handleSubmit, watch, setValue } = form;
+  const { handleSubmit } = form;
 
   const onSubmit = (data: DataSekolahAsal) => {
     console.log(data);
