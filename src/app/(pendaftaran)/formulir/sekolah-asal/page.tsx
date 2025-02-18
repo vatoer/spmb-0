@@ -9,7 +9,7 @@ const breadcrumbs: Item[] = [
   { name: "Sekolah Asal", href: "/formulir/sekolah-asal" },
 ];
 
-const FormulirSekolanhAsalPage = () => {
+const FormulirSekolahAsalPage = () => {
   return (
     <FormulirContainer breadcrumbs={breadcrumbs} title="Sekolah Asal">
       <DataSekolahAsalForm />
@@ -21,4 +21,4 @@ const FormulirSekolanhAsalPage = () => {
   );
 };
 
-export default FormulirSekolanhAsalPage;
+export default FormulirSekolahAsalPage;

@@ -1,6 +1,6 @@
 import { dbSpmb } from "@/lib/db-spmb";
 import { DefinedKeys } from "@/types/defined-keys";
-import { snakeToCamelArray } from "@/utils/convertion/snake-to-camel";
+import { snakeToCamelArray } from "@/utils/conversion/snake-to-camel";
 
 interface FtsCariSekolahResultWithDynamicKeys {
   npsn: string;

@@ -1,6 +1,6 @@
 import { dbSpmb } from "@/lib/db-spmb";
 import { DefinedKeys } from "@/types/defined-keys";
-import { snakeToCamel } from "@/utils/convertion/snake-to-camel";
+import { snakeToCamel } from "@/utils/conversion/snake-to-camel";
 import { processCsvFile } from "@/utils/csv/process-file";
 
 interface CsvSekolahWithDynamicKeys {
@@ -168,7 +168,7 @@ const seedDapoWilayah = async () => {
 const main = async () => {
   try {
     await seedDapoWilayah();
-    // await seedSekolah();
+    await seedSekolah();
   } catch (error) {
     console.error("Seeding failed:", error);
     process.exit(1);

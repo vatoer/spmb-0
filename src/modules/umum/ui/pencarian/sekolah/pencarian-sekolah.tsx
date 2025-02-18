@@ -8,7 +8,9 @@ import HasilPencarian from "@/modules/umum/ui/pencarian/sekolah/hasil-pencarian"
 import { ActionResponse } from "@/types/response";
 // import { ActionResponse } from "@/types/response";
 import { SearchIcon, X } from "lucide-react";
-import { startTransition, useActionState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+import { startTransition, useActionState, useEffect, useState } from "react";
 
 // type SearchState = {
 //   success: boolean;
@@ -16,7 +18,16 @@ import { startTransition, useActionState } from "react";
 //   message?: string;
 // };
 
-export const PencarianSekolah = ({}) => {
+interface PencarianSekolahProps {
+  onClickResult?: (result: FtsCariSekolahResult) => void;
+}
+export const PencarianSekolah = ({
+  onClickResult = () => {},
+}: PencarianSekolahProps) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchState, formAction, isPending] = useActionState<
     ActionResponse<FtsCariSekolahResult[]>, // State type
     FormData // Payload type (FormData)
@@ -25,7 +36,7 @@ export const PencarianSekolah = ({}) => {
       prevState: ActionResponse<FtsCariSekolahResult[]>,
       formData: FormData
     ): Promise<ActionResponse<FtsCariSekolahResult[]>> => {
-      const searchQuery = formData.get("searchQuery") as string;
+      setSearchQuery(formData.get("searchQuery") as string);
 
       // Check if search query is empty
       if (!searchQuery) {
@@ -49,19 +60,44 @@ export const PencarianSekolah = ({}) => {
     event.preventDefault(); // Prevent the default form submission behavior
     const formData = new FormData(event.currentTarget); // Create a FormData object from the form element
     // Wrap the async function in startTransition for proper handling of async state
+    const searchQuery = formData.get("searchQuery") as string;
+
+    // Update the URL with the search query
+    const url = `${pathname}?${searchParams}`
+      .replace(/q=[^&]+&?/, "")
+      .replace(/&$/, "");
+
+    router.replace(url + `&q=${searchQuery}`);
+
     startTransition(() => {
       formAction(formData); // Pass the FormData object to formAction
     });
   };
 
+  useEffect(() => {
+    const searchQuery = searchParams.get("q") || "";
+    console.log(searchQuery);
+    if (searchQuery) {
+      const formData = new FormData();
+      formData.set("searchQuery", searchQuery);
+      startTransition(() => {
+        console.log("searchQuery", searchQuery);
+        formAction(formData);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchQuery]);
+
   return (
-    <div className=" flex flex-col w-full items-center">
+    <div className=" flex flex-col w-full items-center ">
       <form
         // action={formAction}
         onSubmit={handleSubmit} // Use handleSubmit to prevent form reset
         className={cn(
-          "flex flex-col w-full max-w-[36rem]",
-          !searchState.success ? "mt-[calc(15vh-4rem)]" : "mb-[2rem]"
+          "flex flex-col w-full",
+          !searchState.success
+            ? "mt-[calc(15vh-4rem)] md:max-w-[36rem]"
+            : "mb-[2rem]"
         )}
       >
         <div className="relative w-full h-12">
@@ -69,6 +105,8 @@ export const PencarianSekolah = ({}) => {
           <input
             type="text"
             name="searchQuery"
+            value={searchQuery || ""}
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full h-full pl-10 pr-2 py-2 border rounded-l-full rounded-r-full focus:outline-none focus:border-blue-300"
             placeholder="Cari NPSN atau Nama Sekolah"
           />
@@ -92,7 +130,10 @@ export const PencarianSekolah = ({}) => {
         </div>
       </form>
       {/* Only render HasilPencarian if searchState is a SuccessResponse */}
-      {searchState.success && <HasilPencarian data={searchState.data} />}
+      {isPending && <h1 className="">Mencari sekolah ...</h1>}
+      {searchState.success && (
+        <HasilPencarian data={searchState.data} onClickResult={onClickResult} />
+      )}
     </div>
   );
 };

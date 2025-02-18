@@ -55,5 +55,6 @@
   "auto-rename-tag.activationOnLanguage": ["html", "xml", "php", "javascript"],
   "[sql]": {
     "editor.defaultFormatter": "ms-ossdata.vscode-postgresql"
-  }
+  },
+  "cSpell.words": ["dapo", "Dikdasmen", "Npsn", "ortu", "psql", "tsvector"]
 }

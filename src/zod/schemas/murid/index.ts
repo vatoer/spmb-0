@@ -139,7 +139,7 @@ export const StatusDomisiliEnum = z.enum([
   "SESUAI_KK",
   "SURAT_PINDAH",
   "SESUAI_DOMISILI_PONDOK",
-  "SESUAI_DOMISILI_PANTIASUHAN",
+  "SESUAI_DOMISILI_PANTI_ASUHAN",
   "LAINNYA",
 ]);
 

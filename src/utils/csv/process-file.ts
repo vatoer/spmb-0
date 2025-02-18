@@ -1,4 +1,4 @@
-import { snakeToCamel } from "@/utils/convertion/snake-to-camel";
+import { snakeToCamel } from "@/utils/conversion/snake-to-camel";
 import csv from "csv-parser";
 import fs from "fs";
 import path from "path";

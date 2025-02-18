@@ -283,7 +283,7 @@ export const DataDiriForm = ({ nextStep = () => {} }: DataDiriFormProps) => {
                       <option value="SESUAI_DOMISILI_PONDOK">
                         Sesuai Domisili Pondok
                       </option>
-                      <option value="SESUAI_DOMISILI_PANTIASUHAN">
+                      <option value="SESUAI_DOMISILI_PANTI_ASUHAN">
                         Sesuai Domisili Panti Asuhan
                       </option>
                       <option value="LAINNYA">Lainnya</option>
@@ -440,7 +440,7 @@ export const DataDiriForm = ({ nextStep = () => {} }: DataDiriFormProps) => {
                 <FormLabel>Alamat Domisili</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Jl... Komplek... Blok..."
+                    placeholder="Jl...Blok..."
                     {...field}
                     className="bg-background h-12"
                   />

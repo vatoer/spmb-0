@@ -1,4 +1,3 @@
-import { cariSekolah } from "@/data/sekolah/fts";
 import { Item } from "@/modules/pendaftaran/ui/components/breadcrumbs";
 import FormulirContainer, {
   FormulirContainerFooter,
@@ -10,10 +9,7 @@ const breadcrumbs: Item[] = [
   { name: "Sekolah Tujuan", href: "/formulir/sekolah-tujuan" },
 ];
 
-const ftsResult = await cariSekolah("sma 1 paciran");
-console.log(ftsResult);
-
-const FormulirSekolanhAsalPage = async () => {
+const FormulirSekolahAsalPage = async () => {
   return (
     <FormulirContainer breadcrumbs={breadcrumbs} title="Sekolah Tujuan">
       <PencarianSekolah />
@@ -25,4 +21,4 @@ const FormulirSekolanhAsalPage = async () => {
   );
 };
 
-export default FormulirSekolanhAsalPage;
+export default FormulirSekolahAsalPage;

@@ -2,25 +2,40 @@ import { FtsCariSekolahResult } from "@/data/sekolah/fts";
 
 interface HasilPencarianProps {
   data: FtsCariSekolahResult[];
-  onSelect?: (sekolah: FtsCariSekolahResult) => void;
+  onClickResult?: (sekolah: FtsCariSekolahResult) => void;
 }
 export const HasilPencarian = ({
   data,
-  onSelect = () => {},
+  onClickResult = () => {},
 }: HasilPencarianProps) => {
   return (
     <div className="flex flex-col gap-1 w-full items-start">
       {data.map((sekolah) => (
-        <RowSekolah key={sekolah.npsn} sekolah={sekolah} />
+        <RowSekolah
+          key={sekolah.npsn}
+          onClickResult={onClickResult}
+          sekolah={sekolah}
+        />
       ))}
     </div>
   );
 };
 
-export const RowSekolah = ({ sekolah }: { sekolah: FtsCariSekolahResult }) => {
+interface RowSekolahProps {
+  sekolah: FtsCariSekolahResult;
+  onClickResult?: (sekolah: FtsCariSekolahResult) => void;
+}
+export const RowSekolah = ({ sekolah, onClickResult }: RowSekolahProps) => {
+  const handleClickResult = (sekolah: FtsCariSekolahResult) => {
+    console.log(sekolah);
+    onClickResult?.(sekolah);
+  };
   return (
     <div className="flex flex-col text-sm p-2 w-full">
-      <div className="flex flex-auto flex-row w-full text-blue-500 hover:underline hover:cursor-pointer">
+      <div
+        onClick={() => handleClickResult(sekolah)}
+        className="flex flex-auto flex-row w-full text-blue-500 hover:underline hover:cursor-pointer"
+      >
         <span className="text-blue-500 hover:underline hover:cursor-pointer text-xl">
           {sekolah.nama}
         </span>
