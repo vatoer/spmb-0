@@ -30,14 +30,12 @@ export const PencarianSekolah = ({
   const [searchQuery, setSearchQuery] = useState("");
   const [searchState, formAction, isPending] = useActionState<
     ActionResponse<FtsCariSekolahResult[]>, // State type
-    FormData // Payload type (FormData)
+    string // Payload type (string for search query)
   >(
     async (
       prevState: ActionResponse<FtsCariSekolahResult[]>,
-      formData: FormData
+      searchQuery: string
     ): Promise<ActionResponse<FtsCariSekolahResult[]>> => {
-      setSearchQuery(formData.get("searchQuery") as string);
-
       // Check if search query is empty
       if (!searchQuery) {
         return {
@@ -58,9 +56,6 @@ export const PencarianSekolah = ({
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    const formData = new FormData(event.currentTarget); // Create a FormData object from the form element
-    // Wrap the async function in startTransition for proper handling of async state
-    const searchQuery = formData.get("searchQuery") as string;
 
     // Update the URL with the search query
     const url = `${pathname}?${searchParams}`
@@ -70,23 +65,21 @@ export const PencarianSekolah = ({
     router.replace(url + `&q=${searchQuery}`);
 
     startTransition(() => {
-      formAction(formData); // Pass the FormData object to formAction
+      formAction(searchQuery); // Pass the FormData object to formAction
     });
   };
 
   useEffect(() => {
-    const searchQuery = searchParams.get("q") || "";
-    console.log(searchQuery);
-    if (searchQuery) {
-      const formData = new FormData();
-      formData.set("searchQuery", searchQuery);
+    const q = searchParams.get("q") || "";
+    setSearchQuery(q);
+    console.log(q);
+    if (q) {
       startTransition(() => {
-        console.log("searchQuery", searchQuery);
-        formAction(formData);
+        formAction(q);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchQuery]);
+  }, []);
 
   return (
     <div className=" flex flex-col w-full items-center ">
@@ -112,6 +105,7 @@ export const PencarianSekolah = ({
           />
           <Button
             variant={"ghost"}
+            onClick={() => setSearchQuery("")}
             className="absolute top-1/2 right-2 -translate-y-1/2 size-4 w-[2rem] h-full text-gray-500 rounded-r-full hover:bg-transparent"
             type="reset"
           >
