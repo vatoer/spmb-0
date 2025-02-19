@@ -76,14 +76,14 @@ jobs:
 
       - name: Extract and restart service on VPS
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'          
           tar -xzf ${{ secrets.DIR_TARGET }}/build.tar.gz -C ${{ secrets.DIR_TARGET }}
           cd ${{ secrets.DIR_TARGET }}
           git pull origin main
+          source ~/.bashrc
+          source ~/.profile
+          export PATH="$HOME/.local/bin:$HOME/.nvm/versions/node/v20.11.1/bin:$PATH"
           pm2 stop siap-spmb || true
-          export PNPM_PATH="${{ secrets.PNPM_PATH }}"
-          export PM2_PATH="${{ secrets.PM2_PATH }}"
-          export PATH="$PNPM_PATH:$PM2_PATH:$PATH" # Use secrets for pnpm and pm2 paths
           pnpm install
           pm2 restart siap-spmb || pm2 start pnpm --name siap-spmb -- start -p 3040
           EOF
