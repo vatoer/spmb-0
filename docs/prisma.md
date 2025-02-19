@@ -14,29 +14,29 @@ pnpm prisma migrate deploy --schema=./prisma/db-auth/schema.prisma
 
 ```
 
-## database spmb
+## database namadatabase
 
 ```sh
-pnpm prisma db push --schema=./prisma/db-spmb/schema.prisma
-pnpm prisma generate --schema=./prisma/db-spmb/schema.prisma
+pnpm prisma db push --schema=./prisma/db-namadatabase/schema.prisma
+pnpm prisma generate --schema=./prisma/db-namadatabase/schema.prisma
 
-pnpm prisma migrate deploy --schema=./prisma/db-spmb/schema.prisma
+pnpm prisma migrate deploy --schema=./prisma/db-namadatabase/schema.prisma
 
 ```
 
 ## manually add tsv on sekolah
 
 ```sh
-# pnpm prisma db push --schema=./prisma/db-spmb/schema.prisma
-# pnpm prisma migrate reset --schema=./prisma/db-spmb/schema.prisma
+# pnpm prisma db push --schema=./prisma/db-namadatabase/schema.prisma
+# pnpm prisma migrate reset --schema=./prisma/db-namadatabase/schema.prisma
 
-pnpm prisma migrate dev --name init  --schema=./prisma/db-spmb/schema.prisma
-pnpm prisma migrate dev --name add_tsvector_on_sekolah --create-only --schema=./prisma/db-spmb/schema.prisma
-# pnpm prisma migrate status --schema=./prisma/db-spmb/schema.prisma
-# pnpm prisma migrate resolve add_tsvector_on_sekolah --rolled-back 20250217115438_add_tsvector_on_sekolah --schema=./prisma/db-spmb/schema.prisma
+pnpm prisma migrate dev --name init  --schema=./prisma/db-namadatabase/schema.prisma
+pnpm prisma migrate dev --name add_tsvector_on_sekolah --create-only --schema=./prisma/db-namadatabase/schema.prisma
+# pnpm prisma migrate status --schema=./prisma/db-namadatabase/schema.prisma
+# pnpm prisma migrate resolve add_tsvector_on_sekolah --rolled-back 20250217115438_add_tsvector_on_sekolah --schema=./prisma/db-namadatabase/schema.prisma
 
-pnpm prisma migrate deploy --schema=./prisma/db-spmb/schema.prisma
-# pnpm prisma migrate dev --name add_kelurahan_desa --schema=./prisma/db-spmb/schema.prisma
+pnpm prisma migrate deploy --schema=./prisma/db-namadatabase/schema.prisma
+# pnpm prisma migrate dev --name add_kelurahan_desa --schema=./prisma/db-namadatabase/schema.prisma
 ```
 
 ```sh
@@ -67,16 +67,47 @@ CREATE USER prisma_admin WITH PASSWORD 'admin_password';
 -- Create the limited user
 CREATE USER prisma_user WITH PASSWORD 'user_password';
 
+
 -- Grant all privileges on the database to the elevated user
-GRANT ALL PRIVILEGES ON DATABASE your_database TO prisma_admin;
+GRANT ALL PRIVILEGES ON DATABASE namadatabase TO user_admin;
+
+-- Grant CREATE DATABASE permission
+GRANT CREATE ON DATABASE namadatabase TO user_admin;
+
+-- Grant all privileges on the database
+GRANT ALL PRIVILEGES ON DATABASE namadatabase TO user_admin;
+
+-- Grant all privileges on all tables, sequences, and schemas
+\c namadatabase
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO user_admin;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO user_admin;
+GRANT ALL PRIVILEGES ON SCHEMA public TO user_admin;
 
 -- Grant limited privileges on the database to the limited user
-GRANT CONNECT ON DATABASE your_database TO prisma_user;
-GRANT USAGE ON SCHEMA public TO prisma_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO prisma_user;
-GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO prisma_user;
+GRANT CONNECT ON DATABASE namadatabase TO namadatabaselu;
+GRANT USAGE ON SCHEMA public TO namadatabaselu;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO namadatabaselu;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO namadatabaselu;
 
-CREATE ROLE new_power_user WITH LOGIN SUPERUSER PASSWORD 'your_password';
+-- CREATE ROLE new_power_user WITH LOGIN SUPERUSER PASSWORD 'your_password';
+
+
+-- Grant CREATE DATABASE permission
+GRANT CREATE ON DATABASE namadatabaseauth TO user_admin;
+
+-- Grant all privileges on the database
+GRANT ALL PRIVILEGES ON DATABASE namadatabaseauth TO user_admin;
+-- Grant all privileges on all tables, sequences, and schemas
+\c namadatabaseauth
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO user_admin;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO user_admin;
+GRANT ALL PRIVILEGES ON SCHEMA public TO user_admin;
+
+-- Grant limited privileges on the database to the limited user
+GRANT CONNECT ON DATABASE namadatabaseauth TO namadatabaselu;
+GRANT USAGE ON SCHEMA public TO namadatabaselu;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO namadatabaselu;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO namadatabaselu;
 
 
 # Exit psql
@@ -93,12 +124,12 @@ add to `package.json`
 
 ```diff
  "scripts": {
-+    "prisma:seed:spmb": "tsx prisma/db-spmb/seed.ts"
++    "prisma:seed:namadatabase": "tsx prisma/db-namadatabase/seed.ts"
   },
 ```
 
 run seed
 
 ```sh
-pnpm prisma:seed:spmb
+pnpm prisma:seed:namadatabase
 ```

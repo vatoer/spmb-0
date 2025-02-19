@@ -10,10 +10,10 @@
     "prisma:seed:spmb": "tsx prisma/db-spmb/seed.ts",
     "prisma:seed:sekolah": "tsx prisma/db-spmb/seed-sekolah.ts",
     "prisma:seed:dapo-wilayah": "tsx prisma/db-spmb/seed-dapo-wilayah.ts",
-    "prisma:auth:deploy": "cross-env DATABASE_URL_AUTH=${DATABASE_URL_AUTH_ADMIN} pnpm prisma migrate deploy --schema prisma/db-auth/schema.prisma",
-    "prisma:auth:generate": "cross-env DATABASE_URL_AUTH=${DATABASE_URL_AUTH_ADMIN} pnpm prisma generate --schema prisma/db-auth/schema.prisma",
-    "prisma:spmb:deploy": "cross-env DATABASE_URL_SPMB=${DATABASE_URL_SPMB_ADMIN} pnpm prisma migrate deploy --schema prisma/db-spmb/schema.prisma",
-    "prisma:spmb:generate": "cross-env DATABASE_URL_SPMB=${DATABASE_URL_SPMB_ADMIN} pnpm prisma generate --schema prisma/db-spmb/schema.prisma"
+    "prisma:auth:deploy": "cross-env DATABASE_URL_AUTH=${DATABASE_URL_AUTH} pnpm prisma migrate deploy --schema prisma/db-auth/schema.prisma",
+    "prisma:auth:generate": "cross-env DATABASE_URL_AUTH=${DATABASE_URL_AUTH} pnpm prisma generate --schema prisma/db-auth/schema.prisma",
+    "prisma:spmb:deploy": "cross-env DATABASE_URL_SPMB=${DATABASE_URL_SPMB} pnpm prisma migrate deploy --schema prisma/db-spmb/schema.prisma",
+    "prisma:spmb:generate": "cross-env DATABASE_URL_SPMB=${DATABASE_URL_SPMB} pnpm prisma generate --schema prisma/db-spmb/schema.prisma"
   },
   "prisma": {
     "seed": "tsx prisma/db-spmb/seed.ts"
