@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
@@ -167,6 +168,7 @@ const Sidebar = React.forwardRef<
     side?: "left" | "right";
     variant?: "sidebar" | "floating" | "inset";
     collapsible?: "offcanvas" | "icon" | "none";
+    description?: string; // vatoer
   }
 >(
   (
@@ -175,6 +177,7 @@ const Sidebar = React.forwardRef<
       variant = "sidebar",
       collapsible = "offcanvas",
       title,
+      description, // vatoer
       className,
       children,
       ...props
@@ -214,6 +217,7 @@ const Sidebar = React.forwardRef<
           >
             <SheetHeader className="sr-only">
               <SheetTitle>{title}</SheetTitle>
+              <SheetDescription>{description}</SheetDescription>
             </SheetHeader>
             <div className="flex h-full w-full flex-col">{children}</div>
           </SheetContent>

@@ -56,5 +56,13 @@
   "[sql]": {
     "editor.defaultFormatter": "ms-ossdata.vscode-postgresql"
   },
-  "cSpell.words": ["dapo", "Dikdasmen", "Npsn", "ortu", "psql", "tsvector"]
+  "cSpell.words": [
+    "dapo",
+    "Dikdasmen",
+    "Npsn",
+    "ortu",
+    "psql",
+    "tsvector",
+    "vatoer"
+  ]
 }

@@ -82,7 +82,7 @@ export const PencarianSekolah = ({
   }, []);
 
   return (
-    <div className=" flex flex-col w-full items-center ">
+    <div className=" flex flex-col w-full items-center md:max-w-[800px] ">
       <form
         // action={formAction}
         onSubmit={handleSubmit} // Use handleSubmit to prevent form reset
@@ -96,7 +96,8 @@ export const PencarianSekolah = ({
         <div className="relative w-full h-12">
           <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 size-4 h-full text-gray-500" />
           <input
-            type="text"
+            type="input"
+            enterKeyHint="search"
             name="searchQuery"
             value={searchQuery || ""}
             onChange={(e) => setSearchQuery(e.target.value)}
