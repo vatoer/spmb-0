@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/toaster";
 import { auth } from "@/modules/auth/auth";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
@@ -26,6 +27,7 @@ export default async function RootLayout({
         <SessionProvider session={session} key={session?.user?.id}>
           {children}
         </SessionProvider>
+        <Toaster />
       </body>
     </html>
   );

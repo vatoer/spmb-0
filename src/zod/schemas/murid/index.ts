@@ -1,3 +1,4 @@
+import { parseNomorInduk } from "@/utils/kependudukan";
 import { z } from "zod";
 
 export enum JenisKelamin {
@@ -160,10 +161,14 @@ export type Domisili = z.infer<typeof domisiliSchema>;
 export const baseSchema = z.object({
   nama: z.string().min(3).max(255),
   kk: z.string().min(16).max(16).optional(),
-  nik: z.string().min(16).max(16).optional(),
+  nik: z
+    .string()
+    .min(16)
+    .max(16)
+    .regex(/^\d+$/, "NIK hanya boleh berisi angka"),
   nisn: z.string().min(10).max(10).optional(),
   tempatLahir: z.string().min(3).max(255),
-  tanggalLahir: genericTanggalSchema,
+  tanggalLahir: z.date(),
   jenisKelamin: jenisKelaminSchema,
   agama: agamaSchema,
   golonganDarah: golonganDarahSchema,
@@ -171,7 +176,12 @@ export const baseSchema = z.object({
 });
 
 // Merging the schemas
-export const dataDiriSchema = baseSchema.merge(domisiliSchema);
+export const dataDiriSchema = baseSchema.merge(domisiliSchema).extend({
+  nik: baseSchema.shape.nik.refine(
+    (val) => parseNomorInduk(val) !== null, // ✅ Implicit return
+    { message: "NIK tidak valid" }
+  ),
+});
 
 export type DataDiri = z.infer<typeof dataDiriSchema>;
 

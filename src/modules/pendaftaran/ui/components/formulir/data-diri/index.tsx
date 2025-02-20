@@ -10,15 +10,22 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { DataDiri, dataDiriSchema } from "@/zod/schemas/murid";
+import {
+  Agama,
+  DataDiri,
+  dataDiriSchema,
+  GolonganDarah,
+} from "@/zod/schemas/murid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import dynamic from "next/dynamic";
 // import { SelectProvinsi } from "@/components/select-provinsi";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { useWizardForm } from "@/modules/pendaftaran/hooks/use-wizard-form";
 import CumulativeErrors from "@/modules/umum/ui/cumulative-error";
-import InputDatePicker from "@/modules/umum/ui/date-picker";
+import { isValidDateString, parseNIK } from "@/utils/kependudukan";
 import { ChevronDown } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -44,8 +51,8 @@ const defaultValuesDataDiri = {
   tempatLahir: "",
   tanggalLahir: new Date(),
   // jenisKelamin: JenisKelamin.LakiLaki,
-  // agama: Agama.Lainnya,
-  // golonganDarah: GolonganDarah.AB,
+  agama: Agama.Lainnya,
+  golonganDarah: GolonganDarah.TIDAK_TAHU,
   nisn: "",
   nik: "",
   // jenjangDikdasmen: JenjangDikdasmen.SD,
@@ -68,21 +75,30 @@ const checkParentPrefix = (parent: string, child: string) => {
 export const DataDiriForm = ({ nextStep = () => {} }: DataDiriFormProps) => {
   const { formData, updateFormData } = useWizardForm(defaultValuesDataDiri);
   const form = useForm<DataDiri>({
+    mode: "onBlur",
     resolver: zodResolver(dataDiriSchema),
     defaultValues: formData,
   });
+  const { toast } = useToast();
 
-  const { handleSubmit, watch, setValue } = form;
+  const { handleSubmit, watch, setValue, trigger } = form;
 
   const wilayah = watch("wilayah");
   const provinsi = watch("provinsi");
   const kotaKabupaten = watch("kotaKabupaten");
   const kecamatan = watch("kecamatan");
   const desaKelurahan = watch("desaKelurahan");
+  const nik = watch("nik");
+  // const tanggalLahir = watch("tanggalLahir");
 
   const onSubmit = (data: DataDiri) => {
     console.log(data);
     updateFormData(data);
+    toast({
+      duration: 2000,
+      title: "Data Diri",
+      description: "Data diri berhasil disimpan.",
+    });
     nextStep();
   };
 
@@ -122,6 +138,36 @@ export const DataDiriForm = ({ nextStep = () => {} }: DataDiriFormProps) => {
   useEffect(() => {
     setValue("wilayah", desaKelurahan);
   }, [desaKelurahan, setValue]);
+
+  useEffect(() => {
+    const cekNik = async () => {
+      if (!nik || nik.length < 16) return; // Avoid unnecessary execution
+
+      if (nik.length === 16) {
+        const nikData = parseNIK(nik);
+        if (nikData) {
+          const isValid = await trigger("nik");
+          if (isValid) {
+            setValue("tanggalLahir", nikData.birthDate);
+            setValue("jenisKelamin", nikData.gender);
+          }
+        } else {
+          toast({
+            title: "Invalid NIK",
+            description:
+              "The entered NIK is not valid. Please check and try again.",
+            action: <ToastAction altText="Dismiss">OK</ToastAction>,
+          });
+        }
+      }
+      // else {
+      //   trigger("nik"); // Only revalidate if `nik` is longer than expected
+      // }
+    };
+
+    cekNik();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nik]);
 
   return (
     <div className="flex flex-col w-full items-center">
@@ -188,6 +234,25 @@ export const DataDiriForm = ({ nextStep = () => {} }: DataDiriFormProps) => {
           <div className="flex flex-col md:flex-row gap-2">
             <FormField
               control={form.control}
+              name="jenisKelamin"
+              render={({ field }) => (
+                <FormItem className="md:w-1/2">
+                  <FormLabel>Jenis Kelamin</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled
+                      readOnly
+                      placeholder="Jenis Kelamin"
+                      {...field}
+                      className="bg-background h-12"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="tempatLahir"
               render={({ field }) => (
                 <FormItem className="md:w-1/2">
@@ -208,9 +273,34 @@ export const DataDiriForm = ({ nextStep = () => {} }: DataDiriFormProps) => {
               name="tanggalLahir"
               render={({ field }) => (
                 <FormItem className="md:w-1/2">
-                  <FormLabel htmlFor="tanggal-lahir">Tempat Lahir</FormLabel>
+                  <FormLabel>Tanggal Lahir</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled
+                      readOnly
+                      placeholder="tanggal lahir"
+                      {...field}
+                      value={
+                        field.value && isValidDateString(field.value)
+                          ? new Date(field.value).toLocaleDateString()
+                          : ""
+                      }
+                      className="bg-background h-12"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* <FormField
+              control={form.control}
+              name="tanggalLahir"
+              render={({ field }) => (
+                <FormItem className="md:w-1/2">
+                  <FormLabel htmlFor="tanggal-lahir">Tanggal Lahir</FormLabel>
                   <FormControl>
                     <InputDatePicker
+                      date={tanggalLahir}
                       calendarOptions={{
                         fromDate: new Date(
                           new Date().setFullYear(new Date().getFullYear() - 18)
@@ -227,7 +317,7 @@ export const DataDiriForm = ({ nextStep = () => {} }: DataDiriFormProps) => {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
           </div>
           <FormField
             control={form.control}

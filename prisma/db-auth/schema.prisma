@@ -9,6 +9,37 @@ datasource db {
   url      = env("DATABASE_URL_AUTH")
 }
 
+enum Agama {
+  Islam
+  Protestan
+  Katolik
+  Hindu
+  Buddha
+  Konghucu
+  Lainnya
+}
+
+enum JenjangDikdasmen {
+  SD
+  SMP
+  SMA
+  Lainnya
+}
+
+enum JenjangPendidikan {
+  SD
+  SMP
+  SMA
+  D1
+  D2
+  D3
+  D4
+  S1
+  S2
+  S3
+  Lainnya
+}
+
 model Account {
   id                String  @id @default(cuid())
   userId            String
