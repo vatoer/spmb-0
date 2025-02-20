@@ -41,7 +41,7 @@ jobs:
       #     DATABASE_URL: ${{ secrets.DATABASE_URL_ADMIN }}
       #   run: npx prisma migrate deploy
 
-      - name: Run Prisma Push
+      - name: Run Prisma deploy and generate
         env:
           DATABASE_URL_AUTH: ${{ secrets.DATABASE_URL_AUTH_ADMIN }} # Existing secret
           DATABASE_URL_SPMB: ${{ secrets.DATABASE_URL_SPMB_ADMIN }} # New secret added
@@ -56,8 +56,10 @@ jobs:
 
       - name: Build the application
         env:
-          DATABASE_URL_AUTH: ${{ secrets.DATABASE_URL_ADMIN }} # Existing secret
-          DATABASE_URL_SPMB: ${{ secrets.DATABASE_URL_SPMB }} # New secret added
+          AUTH_SECRET: ${{ secrets.SECRET_KEY }}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+          DATABASE_URL_AUTH: ${{ secrets.DATABASE_URL_AUTH_ADMIN }} # Existing secret
+          DATABASE_URL_SPMB: ${{ secrets.DATABASE_URL_SPMB_ADMIN }} # New secret added
           # BASE_PATH_UPLOAD: ${{ secrets.BASE_PATH_UPLOAD }}
           # BASE_PATH_UPLOAD_CHUNK: ${{ secrets.BASE_PATH_UPLOAD_CHUNK }}
         run: pnpm run build # Use pnpm to build the application

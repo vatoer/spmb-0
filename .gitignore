@@ -45,4 +45,6 @@ next-env.d.ts
 
 /.tempworkbench
 
+build.tar.gz
+
 
