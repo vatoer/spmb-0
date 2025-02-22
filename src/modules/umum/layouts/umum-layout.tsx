@@ -17,7 +17,7 @@ export const UmumLayout = async ({ children }: UmumLayoutProps) => {
         <BerandaNavbar />
         <div className="flex min-h-screen pt-[4rem]">
           <BerandaSidebar />
-          <main className="flex-1 overflow-y-auto flex flex-col py-2  md:p-4 gap-4">
+          <main className="flex-1 overflow-y-auto flex flex-col gap-4">
             {children}
           </main>
         </div>
