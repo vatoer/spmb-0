@@ -22,6 +22,12 @@ const FormulirPage = () => {
         <div>
           <Link href="/formulir/sekolah-asal">Sekolah Asal</Link>
         </div>
+        <div>
+          <Link href="/formulir/data-rapor">Rapor</Link>
+        </div>
+        <div>
+          <Link href="/formulir/sekolah-tujuan">Sekolah Tujuan</Link>
+        </div>
       </div>
     </div>
   );

@@ -110,12 +110,12 @@ const SchoolHome: React.FC<SchoolProps> = ({
 
       {/* Sticky CTA */}
       {!isHeroVisible && (
-        <div className="fixed flex flex-col md:flex-row md:px-8  gap-4 w-full justify-end bottom-4 p-2 rounded-md bg-gray-50 shadow-2xl border-b border-r border-gray-200 z-50">
+        <div className="fixed flex flex-col md:flex-row gap-2 px-8 items-center bottom-4 w-full justify-end left-1/2 transform -translate-x-1/2 p-2 rounded-md bg-gray-50 shadow-2xl border-b border-r border-gray-200 z-50">
           <div className="flex flex-col items-center justify-center">
             <h1 className="md:text-xl font-bold mt-2">{name}</h1>
             <p className="text-sm text-gray-700 md:mb-4">{tagline}</p>
           </div>
-          <DaftarSekarang className="md:mr-8" />
+          <DaftarSekarang />
         </div>
       )}
     </div>

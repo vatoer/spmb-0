@@ -30,7 +30,7 @@ export function HeroCarousel() {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <DaftarSekarang className="absolute bottom-0 md:bottom-6 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto" />
+      <DaftarSekarang className="absolute bottom-0 md:bottom-6 left-1/2 -translate-x-1/2 -translate-y-1/2" />
       <CarouselPrevious className="ml-16" />
       <CarouselNext className="mr-16" />
     </Carousel>

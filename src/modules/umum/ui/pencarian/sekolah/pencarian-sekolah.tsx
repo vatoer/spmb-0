@@ -88,9 +88,7 @@ export const PencarianSekolah = ({
         onSubmit={handleSubmit} // Use handleSubmit to prevent form reset
         className={cn(
           "flex flex-col w-full",
-          !searchState.success
-            ? "mt-[calc(15vh-4rem)] md:max-w-[36rem]"
-            : "mb-[2rem]"
+          !searchState.success ? "md:max-w-[36rem]" : "mb-[2rem]"
         )}
       >
         <div className="relative w-full h-12">

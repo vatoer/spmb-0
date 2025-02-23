@@ -17,7 +17,10 @@ console.log("decrypted", decrypted);
 
 const FormulirSekolahAsalPage = async () => {
   return (
-    <FormulirContainer breadcrumbs={breadcrumbs} title="Sekolah Tujuan">
+    <FormulirContainer
+      breadcrumbs={breadcrumbs}
+      title="Cari & Pilih Sekolah Tujuan"
+    >
       <ContainerPencarian />
       <FormulirContainerFooter
         prev={{ href: "/formulir/data-rapor", title: "Data Rapor" }}
