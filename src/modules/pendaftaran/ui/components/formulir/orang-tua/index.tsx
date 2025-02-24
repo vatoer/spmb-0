@@ -17,7 +17,7 @@ import {
   JenjangPendidikan,
   Pekerjaan,
   RentangPendapatan,
-} from "@/zod/schemas/murid";
+} from "@/zod/schemas/siswa";
 import { zodResolver } from "@hookform/resolvers/zod";
 // import { SelectProvinsi } from "@/components/select-provinsi";
 import { cn } from "@/lib/utils";

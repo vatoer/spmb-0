@@ -15,7 +15,7 @@ import {
   DataDiri,
   dataDiriSchema,
   GolonganDarah,
-} from "@/zod/schemas/murid";
+} from "@/zod/schemas/siswa";
 import { zodResolver } from "@hookform/resolvers/zod";
 import dynamic from "next/dynamic";
 // import { SelectProvinsi } from "@/components/select-provinsi";

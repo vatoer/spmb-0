@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { DataSekolahAsal, dataSekolahAsalSchema } from "@/zod/schemas/murid";
+import { DataSekolahAsal, dataSekolahAsalSchema } from "@/zod/schemas/siswa";
 import { zodResolver } from "@hookform/resolvers/zod";
 // import { SelectProvinsi } from "@/components/select-provinsi";
 import { cn } from "@/lib/utils";
