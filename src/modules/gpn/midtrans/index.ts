@@ -12,9 +12,9 @@ export const createSnapTransaction = async (
   // sehingga perlu dihandle dengan try catch
   // jika sudah ada transaksi, maka tidak perlu membuat transaksi baru
   try {
-    const transactionStatus = await snapInstance
-      .getTransaction()
-      .status(data.transaction_details.order_id);
+    const transactionStatus = await getSnapTransactionStatus(
+      data.transaction_details.order_id
+    );
     return null;
   } catch (error) {
     console.log(error);
@@ -44,5 +44,15 @@ export const createSnapTransaction = async (
       console.log(error);
       throw new Error("Failed to create transaction, please try again later");
     }
+  }
+};
+
+export const getSnapTransactionStatus = async (orderId: string) => {
+  try {
+    const response = await snapInstance.getTransaction().status(orderId);
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };

@@ -119,7 +119,7 @@ model Siswa {
   rw                     String?       @db.VarChar
   createdAt              DateTime?     @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt              DateTime?     @default(now()) @map("updated_at") @db.Timestamp(6)
-  Pendaftaran            Pendaftaran[]
+  pendaftaran            Pendaftaran[]
 
   @@map("Siswa")
 }
@@ -136,7 +136,7 @@ model Spmb {
   createdAt            DateTime?              @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt            DateTime?              @default(now()) @map("updated_at") @db.Timestamp(6)
   JalurPendaftaranSpmb JalurPendaftaranSpmb[]
-  Pendaftaran          Pendaftaran[]
+  pendaftaran          Pendaftaran[]
 
   @@map("spmb")
 }
@@ -156,6 +156,7 @@ model JalurPendaftaranSpmb {
   @@map("jalur_pendaftaran_spmb")
 }
 
+// jalur pendaftaran diantaranya adalah jalur umum,jalur beasiswa, jalur prestasi,  jalur afirmasi, jalur zonasi, jalur perpindahan orang tua
 model JalurPendaftaran {
   id        String  @id @default(cuid())
   nama      String  @db.VarChar
@@ -211,12 +212,15 @@ model BiayaJalurPendaftaran {
 
 // setiap faktur dapat dibayar oleh satu atau lebih pembayaran
 model Pembayaran {
-  id               String   @id @default(cuid())
-  fakturId         String   @map("faktur_id") @db.VarChar
-  nominal          Decimal  @db.Decimal
-  tanggal          DateTime @db.Date
-  metodePembayaran String   @map("metode_pembayaran") @db.VarChar
-  status           String   @db.VarChar
+  id               String  @id @default(cuid())
+  fakturId         String  @map("faktur_id") @db.VarChar
+  nominal          Decimal @db.Decimal
+  metodePembayaran String  @map("metode_pembayaran") @db.VarChar // direct langsung ke sekolah, transfer, virtual account atau via GPN
+  status           String  @db.VarChar
+
+  gpnParameterTransaksi Json? @map("gpn_parameter_transaksi") @db.Json
+  gpnResponTransaksi    Json? @map("gpn_respon_transaksi") @db.Json // ketika request transaksi ke GPN akan ada respon dari GPN
+  gpnStatusTransaksi    Json? @map("gpn_status_transaksi") @db.Json // hasil pengecekan status transaksi ke GPN
 
   createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt DateTime? @default(now()) @map("updated_at") @db.Timestamp(6)
@@ -235,19 +239,20 @@ model Faktur {
   tanggalTerbit     DateTime @map("tanggal_terbit") @db.Date
   tanggalJatuhTempo DateTime @map("tanggal_jatuh_tempo") @db.Date
   nominal           Decimal  @db.Decimal
-  diskon            Decimal? @default(0) @db.Decimal
   status            String   @db.VarChar // lunas, belum lunas
 
   createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt DateTime? @default(now()) @map("updated_at") @db.Timestamp(6)
 
   detilFaktur DetilFaktur[]
-  Pendaftaran Pendaftaran   @relation(fields: [pendaftaranId], references: [id])
-  Pembayaran  Pembayaran[]
+  pendaftaran Pendaftaran   @relation(fields: [pendaftaranId], references: [id])
+  pembayaran  Pembayaran[]
 
   @@map("faktur")
 }
 
+// setiap detil faktur adalah hasil dari biaya pendaftaran yang dipilih oleh pendaftar
+// detil faktur bisa merupakan pengurangan atau diskon dari biaya pendaftaran
 model DetilFaktur {
   id       String  @id @default(cuid())
   fakturId String  @map("faktur_id")
