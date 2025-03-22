@@ -1,4 +1,4 @@
-import { Prisma } from "@/lib/db-auth";
+import { isCustomPrismaClientError } from "@/types/custom-prisma-client-error";
 import { ErrorResponse } from "@/types/response";
 
 export const getPrismaErrorResponse = (
@@ -7,7 +7,7 @@ export const getPrismaErrorResponse = (
 ): ErrorResponse => {
   const dataText = text ? text : ``;
   // TODO: check jika error bukan dari db auth tapi dari db lainnya
-  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+  if (isCustomPrismaClientError(error)) {
     switch (error.code) {
       case `P2000`:
         return {
@@ -145,6 +145,7 @@ export const getPrismaErrorResponse = (
         break;
     }
   }
+  console.log(error);
   return {
     success: false,
     error: "UE-PER-001",
